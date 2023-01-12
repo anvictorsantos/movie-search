@@ -19,15 +19,27 @@ function getMovies(searchText) {
         let movies = response.results;
         let output = '';
         $.each(movies, (index, movie) => {
-            output += `
-                <div class="card col-md-3 m-4">
-                    <img src="https://image.tmdb.org/t/p/original/${movie.poster_path}" class="card-img-top" alt="${movie.title}">
-                    <div class="card-body">
-                        <h5 class="card-title">${movie.title}</h5>
-                        <a onclick="movieSelected('${movie.id}')" class="btn btn-primary" href="#">Movie Details</a>
+            if (movie.poster_path !== null) {
+                output += `
+                    <div class="card col-md-3 m-4">
+                        <img src="https://image.tmdb.org/t/p/original/${movie.poster_path}" class="card-img-top" alt="${movie.title}">
+                        <div class="card-body">
+                            <h5 class="card-title">${movie.title}</h5>
+                            <a onclick="movieSelected('${movie.id}')" class="btn btn-primary" href="#">Movie Details</a>
+                        </div>
                     </div>
-                </div>
-            `;
+                `;
+            } else {
+                output += `
+                    <div class="card col-md-3 m-4">
+                        <img src="images/noimage.jpg" class="card-img-top" alt="${movie.title}">
+                        <div class="card-body">
+                            <h5 class="card-title">${movie.title}</h5>
+                            <a onclick="movieSelected('${movie.id}')" class="btn btn-primary" href="#">Movie Details</a>
+                        </div>
+                    </div>
+                `;                
+            }
         });
 
         $('#movies').html(output);
@@ -58,10 +70,19 @@ function getMovie() {
         $.each(movie.genres, (index, genres) => {
             arrayGenres.push(genres.name);
         });
+
         let output = `
             <div class="row">
                 <div class="col-md-4">
-                    <img src="https://image.tmdb.org/t/p/original/${movie.poster_path}">
+            `;
+        
+        if (movie.poster_path !== null) {
+            output += `<img src="https://image.tmdb.org/t/p/original/${movie.poster_path}">`;
+        } else {
+            output += `<img src="images/noimage.jpg">`;
+        }
+        
+        output += `
                     <ul class="list-group">
                         <li class="list-group-item">
                             <strong>Genre:</strong>
