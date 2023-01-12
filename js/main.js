@@ -20,10 +20,10 @@ function getMovies(searchText) {
         let output = '';
         $.each(movies, (index, movie) => {
             output += `
-                <div class="col-md-3">
-                    <div class="well text-center">
-                        <img src="https://image.tmdb.org/t/p/original/${movie.poster_path}">
-                        <h5>${movie.title}</h5>
+                <div class="card col-md-3 m-4">
+                    <img src="https://image.tmdb.org/t/p/original/${movie.poster_path}" class="card-img-top" alt="${movie.title}">
+                    <div class="card-body">
+                        <h5 class="card-title">${movie.title}</h5>
                         <a onclick="movieSelected('${movie.id}')" class="btn btn-primary" href="#">Movie Details</a>
                     </div>
                 </div>
@@ -82,12 +82,8 @@ function getMovie() {
                     </ul>
                 </div>
                 <div class="col-md-8">
-                    <h5>${movie.title}</h5>
-                </div>
-            </div>
-            <div class="row">
-                <div class="well">
-                    <h3>Plot</h3>
+                    <h3>${movie.title}</h3>
+                    <h5>Plot</h5>
                     ${movie.overview}
                     <hr>
                     <a href="https://www.imdb.com/search/title/?title=${movie.title}" target="_blank" class="btn btn-primary">View IMDB</a>
